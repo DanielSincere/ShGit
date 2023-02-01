@@ -11,12 +11,12 @@ extension Git {
     let stdOut = allOutput.stdOut.asTrimmedString(encoding: .utf8)
     let stdErr = allOutput.stdErr.asTrimmedString(encoding: .utf8)
 
-    if let stdErr = stdErr {
+    if let stdErr = stdErr, !stdErr.isEmpty {
       throw Errors.interpretError(message: stdErr)
     } else if let stdOut = stdOut {
       return stdOut
     } else {
-      throw Errors.unknownError
+      throw Errors.unknownError("No output and no error")
     }
   }
 }

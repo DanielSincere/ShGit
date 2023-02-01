@@ -8,16 +8,27 @@ public final class Git {
     self.workingDirectory = workingDirectory
   }
 
-  public enum Errors: String, Error {
-    case notGitRepository = "fatal: not a git repository (or any of the parent directories): .git"
-    case unknownError
-
-    static func interpretError(message: String) -> Self {
-      if let e = Self.init(rawValue: message) {
-        return e
-      } else {
-        return .unknownError
+  public enum Errors: Error, LocalizedError, Equatable {
+    case notGitRepository
+    case unknownError(String)
+    
+    public var errorDescription: String? {
+      switch self {
+      case .notGitRepository:
+        return "Not a git repository"
+      case .unknownError(let message):
+        return "Unknown error: \(message)"
       }
+    }
+  
+    static func interpretError(message: String) -> Self {
+      switch message {
+      case "fatal: not a git repository (or any of the parent directories): .git":
+        return .notGitRepository
+      default:
+        return .unknownError(message)
+      }
+ 
     }
   }
 }
