@@ -10,8 +10,8 @@ extension Git {
     let cmd = "git status --porcelain"
 
     let allOutput = try Process(cmd: cmd, workingDirectory: workingDirectory).runReturningAllOutput()
-    let stdOut = allOutput.stdOut?.asTrimmedString(encoding: .utf8)
-    let stdErr = allOutput.stdErr?.asTrimmedString(encoding: .utf8)
+    let stdOut = allOutput.stdOut.asTrimmedString(encoding: .utf8)
+    let stdErr = allOutput.stdErr.asTrimmedString(encoding: .utf8)
 
     if let stdErr = stdErr {
       throw Errors.interpretError(message: stdErr)
