@@ -18,10 +18,9 @@ jobs:
           - os: ubuntu-latest
             swift: "5.8"
     steps:
-      - name: Setup swift
-        uses: slashmo/install-swift@v0.4.0
+      - uses: swift-actions/setup-swift@v1
         with:
-          version: ${{ matrix.swift }}
+          swift-version: ${{ matrix.swift }}
 
       - run: swift --version
       - uses: actions/checkout@v3
